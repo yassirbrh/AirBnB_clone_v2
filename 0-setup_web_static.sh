@@ -13,12 +13,21 @@ echo "<html>
 </html>" > /data/web_static/releases/test/index.html
 ln -sf /data/web_static/releases/test/ /data/web_static/current
 chown -R ubuntu:ubuntu /data/
-echo "http {
+echo -e "http {
         root /var/www/helloworld;
         index index.html;
         server {
                 listen 80;
+                add_header X-Served-By $HOSTNAME;
                 location \ {
+                }
+                location /redirect_me {
+                	return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+                }
+                error_page 404 /404_redirection;
+                location = /404_redirection {
+                        internal;
+                        return 404 \"Ceci n'est pas une page\n\n\";
                 }
                 location /hbnb_static {
                 	alias /data/web_static/current;
