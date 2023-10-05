@@ -33,5 +33,5 @@ printf %s "server {
             	alias /data/web_static/current;
             	index index.html;
             }
-}" > /etc/nginx/nginx.conf
+}" > /etc/nginx/sites-available/default
 service nginx restart
