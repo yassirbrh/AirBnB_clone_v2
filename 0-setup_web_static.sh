@@ -14,7 +14,7 @@ echo "<html>
 ln -sf /data/web_static/releases/test/ /data/web_static/current
 chown -R ubuntu /data/
 chgrp -R ubuntu /data/
-echo -e "http {
+printf %s "http {
         root /var/www/helloworld;
         index index.html;
         server {
