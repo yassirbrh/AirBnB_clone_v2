@@ -4,31 +4,11 @@
     the contents of the web_static folder and
     distributes an archive to your web servers, using the function do_deploy
 '''
-from datetime import datetime
 from fabric.api import *
 from os import path
 
 env.user = "ubuntu"
 env.hosts = ["54.160.103.40", "52.91.148.127"]
-
-
-def do_pack():
-    """ Create a .tgz archive from the contents of web_static. """
-    dt = datetime.utcnow()
-    year = dt.year
-    month = dt.month
-    day = dt.day
-    hour = dt.hour
-    minute = dt.minute
-    second = dt.second
-    file = "versions/web_static_"
-    file += "{}{}{}{}{}{}.tgz".format(year, month, day, hour, minute, second)
-    if path.isdir("versions") is False:
-        if local("mkdir -p versions").failed is True:
-            return None
-    if local("tar -cvzf {} web_static".format(file)).failed is True:
-        return None
-    return file
 
 
 def do_deploy(archive_path):
@@ -72,5 +52,3 @@ def do_deploy(archive_path):
 
         print("New version deployed!")
         return True
-    else:
-        return False
